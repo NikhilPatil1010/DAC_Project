@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +7,6 @@ const LoginPage = () => {
     password: '',
   });
   const [error, setError] = useState('');
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,20 +17,38 @@ const LoginPage = () => {
     setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
 
-    const result = login(formData.email, formData.password);
-    
-    if (result.success) {
-      navigate('/');
-    } else {
-      setError(result.message);
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Invalid email or password');
+      }
+
+      const data = await response.json();
+
+      // Optional: store JWT
+      localStorage.setItem('token', data.token);
+
+      navigate('/'); // success
+    } catch (err) {
+      setError(err.message || 'Server error. Please try again later.');
     }
   };
 
@@ -41,6 +57,7 @@ const LoginPage = () => {
       <div className="container-custom">
         <div className="max-w-md mx-auto">
           <div className="card p-8 fade-in">
+
             {/* Header */}
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">🔐</div>
@@ -58,12 +75,11 @@ const LoginPage = () => {
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold mb-2">
+                <label className="block text-sm font-semibold mb-2">
                   Email Address
                 </label>
                 <input
                   type="email"
-                  id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -73,12 +89,11 @@ const LoginPage = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold mb-2">
+                <label className="block text-sm font-semibold mb-2">
                   Password
                 </label>
                 <input
                   type="password"
-                  id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -87,41 +102,11 @@ const LoginPage = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
-                <label className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
-                  <span className="text-sm text-gray-600">Remember me</span>
-                </label>
-                <Link to="/forgot-password" className="text-sm text-primary hover:underline">
-                  Forgot Password?
-                </Link>
-              </div>
-
               <button type="submit" className="btn-primary w-full">
                 Sign In
               </button>
             </form>
 
-            {/* Divider */}
-            <div className="flex items-center my-6">
-              <div className="flex-1 border-t border-gray-300"></div>
-              <span className="px-4 text-gray-500 text-sm">OR</span>
-              <div className="flex-1 border-t border-gray-300"></div>
-            </div>
-
-            {/* Social Login */}
-            <div className="space-y-3">
-              <button className="w-full flex items-center justify-center gap-3 border-2 border-gray-300 py-3 rounded-lg hover:bg-gray-50 transition-all">
-                <span className="text-2xl">🔵</span>
-                <span className="font-semibold">Continue with Google</span>
-              </button>
-              <button className="w-full flex items-center justify-center gap-3 border-2 border-gray-300 py-3 rounded-lg hover:bg-gray-50 transition-all">
-                <span className="text-2xl">📘</span>
-                <span className="font-semibold">Continue with Facebook</span>
-              </button>
-            </div>
-
-            {/* Sign Up Link */}
             <div className="text-center mt-6">
               <p className="text-gray-600">
                 Don't have an account?{' '}
@@ -130,16 +115,7 @@ const LoginPage = () => {
                 </Link>
               </p>
             </div>
-          </div>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-800 font-semibold mb-2">Demo Credentials:</p>
-            <p className="text-sm text-blue-700">Email: demo@imart.com</p>
-            <p className="text-sm text-blue-700">Password: demo123</p>
-            <p className="text-xs text-blue-600 mt-2">
-              (Or create a new account to test the registration flow)
-            </p>
           </div>
         </div>
       </div>
