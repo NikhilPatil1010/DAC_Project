@@ -26,7 +26,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch('http://localhost:8080/hii/Login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,9 +36,13 @@ const LoginPage = () => {
           password: formData.password,
         }),
       });
-
+      
       if (!response.ok) {
+       
         throw new Error('Invalid email or password');
+      }
+      else{
+
       }
 
       const data = await response.json();
