@@ -2,8 +2,6 @@ package com.Imart.Respository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import  com.Imart.Entity.User;
-
-public interface UserRepo extends JpaRepository<User , Long> {
+public interface UserRepo extends JpaRepository {
        
 }

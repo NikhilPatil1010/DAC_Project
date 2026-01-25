@@ -2,7 +2,6 @@ package com.Imart.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,17 +11,13 @@ import com.Imart.Entity.User;
 import com.Imart.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/hii")
+@RequestMapping("/User")
 public class UserController {
     @Autowired
     private UserServiceImpl user1;
-    @GetMapping
-    public String hii() {
-        return "Hello from i-mart backend 🚀";
-    }
+	
 	@PostMapping("/Add")
 	public ResponseEntity Add(@RequestBody User user) {
-		System.out.println(user.toString()) ;
 		return ResponseEntity.ok(user1.Addition(user));
 	}
 }

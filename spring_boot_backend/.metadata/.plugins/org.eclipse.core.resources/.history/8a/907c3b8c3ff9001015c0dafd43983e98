@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService{
      UserRepo userr;
 	@Override
 	public int Addition(User user) {
-		System.out.println(user.toString());
 		userr.save(user);
 		return 1;
 	}

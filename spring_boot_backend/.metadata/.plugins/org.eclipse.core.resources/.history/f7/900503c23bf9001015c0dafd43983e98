@@ -1,6 +1,5 @@
 package com.Imart.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Imart.Entity.User;
@@ -11,11 +10,9 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService{
-	@Autowired
      UserRepo userr;
 	@Override
 	public int Addition(User user) {
-		System.out.println(user.toString());
 		userr.save(user);
 		return 1;
 	}

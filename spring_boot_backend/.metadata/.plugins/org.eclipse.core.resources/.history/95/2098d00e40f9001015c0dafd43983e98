@@ -22,7 +22,6 @@ public class UserController {
     }
 	@PostMapping("/Add")
 	public ResponseEntity Add(@RequestBody User user) {
-		System.out.println(user.toString()) ;
 		return ResponseEntity.ok(user1.Addition(user));
 	}
 }

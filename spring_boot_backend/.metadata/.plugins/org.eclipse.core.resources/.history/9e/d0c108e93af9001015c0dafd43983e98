@@ -1,0 +1,16 @@
+package com.Imart.serviceImp;
+
+import com.Imart.service.User;
+import com.Imart.service.UserService;
+
+public class UserServiceImp implements UserService {
+
+	@Override
+	public User loginUser(User user) {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
+	
+
+}
