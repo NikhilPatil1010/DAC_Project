@@ -18,7 +18,7 @@ import com.Imart.service.UserServiceImpl;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/hii")
+@RequestMapping("/auth")
 public class UserController {
     @Autowired
     private UserServiceImpl user1;
@@ -26,12 +26,12 @@ public class UserController {
     public String hii() {
         return "Hello from i-mart backend 🚀";
     }
-	@PostMapping("/Add")
+	@PostMapping("/register")
 	public ResponseEntity Add(@RequestBody User user) {
 		System.out.println(user.toString()) ;
 		return ResponseEntity.ok(user1.Addition(user));
 	}
-	@PostMapping("/Login")
+	@PostMapping("/login")
 	
 	public ResponseEntity<?> login(@RequestBody Userdata user) {
 
