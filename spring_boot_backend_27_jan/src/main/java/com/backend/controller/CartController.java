@@ -21,20 +21,20 @@ public class CartController {
 
     @PostMapping("/items")
     public ResponseEntity<CartResponse> addItem(@RequestParam Long userId,
-                                                @RequestBody CartItemRequest request) {
+            @RequestBody CartItemRequest request) {
         return ResponseEntity.ok(cartService.addItem(userId, request));
     }
 
     @PutMapping("/items/{productId}")
     public ResponseEntity<CartResponse> updateQuantity(@RequestParam Long userId,
-                                                       @PathVariable Long productId,
-                                                       @RequestParam Integer quantity) {
+            @PathVariable Long productId,
+            @RequestParam Integer quantity) {
         return ResponseEntity.ok(cartService.updateQuantity(userId, productId, quantity));
     }
 
     @DeleteMapping("/items/{productId}")
     public ResponseEntity<CartResponse> removeItem(@RequestParam Long userId,
-                                                   @PathVariable Long productId) {
+            @PathVariable Long productId) {
         return ResponseEntity.ok(cartService.removeItem(userId, productId));
     }
 
