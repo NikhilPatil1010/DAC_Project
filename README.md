@@ -148,9 +148,12 @@ FUTURE ENHANCEMENTS
 CONTRIBUTOR
 Heeranand kashyap
 GitHub: https://github.com/goldenheera
+
 Nikhil Patil
 GitHub: https://github.com/NikhilPatil1010
+
 Manoj Yadav
 GitHub : https://github.com/lalit923
+
 Dishant samudre
 GitHub : https://github.com/dishantsamudre9
