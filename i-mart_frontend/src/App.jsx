@@ -13,6 +13,8 @@ import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import ProfilePage from './pages/ProfilePage';
 import OrdersPage from './pages/OrdersPage';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminRoute from './components/routing/AdminRoute';
 
 function App() {
   return (
@@ -29,10 +31,16 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/cart" element={<CartPage />} />
+                
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/order-success" element={<OrderSuccessPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/orders" element={<OrdersPage />} />
+                
+                {/* Admin Routes */}
+                <Route element={<AdminRoute />}>
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                </Route>
               </Routes>
             </main>
             <Footer />

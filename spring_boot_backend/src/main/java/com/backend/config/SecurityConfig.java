@@ -37,10 +37,11 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
 	{
-		http.cors(cors -> cors.configurationSource(corsConfigrationSource()))
+		http.cors(org.springframework.security.config.Customizer.withDefaults())
 		.csrf(csrf ->csrf.disable())
 		  .authorizeHttpRequests(auth -> auth
 				     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+					 .requestMatchers("/api/admin/**").hasRole("ADMIN")
 	                .requestMatchers("/api/auth/login" , "/api/auth/register" , "/swagger-ui/**",
 	                		"/api/**",
 	                		  "/v3/api-docs/**",
@@ -54,20 +55,16 @@ public class SecurityConfig {
 		  ;
 		return http.build() ;
 	}
-	@Bean 
-	public CorsConfigurationSource corsConfigrationSource()
-	{
-		CorsConfiguration configuration = new CorsConfiguration();
-		
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173" ,   "http://localhost:8080" ));
-		configuration.setAllowedMethods(Arrays.asList("GET" , "POST", "PUT","PATCH" ,"OPTIONS" , "DELETE"));
-		configuration.setAllowedHeaders(Arrays.asList("*"));
-		configuration.setAllowCredentials(true);
-		
-		UrlBasedCorsConfigurationSource source  = new UrlBasedCorsConfigurationSource() ;
-		source.registerCorsConfiguration("/**", configuration) ;
-		return source ;
-		
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOriginPattern("*"); // Allow all origins for development
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		source.registerCorsConfiguration("/**", config);
+		return source;
 	}
 
 }

@@ -58,7 +58,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				{
 					
 				User user =	userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("user not exist")) ;
-				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user , null , new ArrayList<>()) ;
+				java.util.List<org.springframework.security.core.authority.SimpleGrantedAuthority> authorities = java.util.Collections.singletonList(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
+				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user , null , authorities) ;
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 				

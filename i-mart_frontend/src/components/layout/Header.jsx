@@ -80,6 +80,11 @@ const Header = () => {
                   </div>
                 </button>
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                  {user?.role === 'ADMIN' && (
+                    <Link to="/admin/dashboard" className="block px-4 py-3 hover:bg-gray-100 transition-colors font-bold text-orange-600 border-b border-gray-100">
+                      Admin Dashboard
+                    </Link>
+                  )}
                   <Link to="/profile" className="block px-4 py-3 hover:bg-gray-100 transition-colors">
                     My Profile
                   </Link>
