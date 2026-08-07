@@ -1,159 +1,139 @@
-i-Mart E-Commerce Application
+# i-Mart E-Commerce Application
 
-i-Mart is a full-stack E-Commerce web application built using Spring Boot, React.js, and MySQL.
-This project was developed as part of the DAC final project.
+i-Mart is a full-stack E-Commerce web application built using **Spring Boot**, **React.js (Vite)**, **Spring Security (JWT)**, and **MySQL**.
 
---------------------------------------------------
+---
 
-PROJECT OVERVIEW
+## 📋 Prerequisites
 
-The i-Mart E-Commerce Application is a scalable and secure online shopping platform that allows users
-to browse products, manage orders, and perform secure operations. It also provides admin
-functionalities for managing products, users, and orders.
+Before running the application, make sure you have the following installed on your machine:
 
---------------------------------------------------
+- **Java JDK**: Version 17 or higher
+- **Node.js**: Version 18+ (includes `npm`)
+- **MySQL Server**: Version 8.0+ running on port `3306`
+- **Maven**: (Optional, Maven Wrapper `./mvnw` is included in the project)
 
-FEATURES
+---
 
-User Features:
-- User registration and login
-- Product browsing and detailed product view
-- Add to cart and checkout
-- Order placement and order history
-- Secure authentication
+## 🛠️ Step-by-Step Guide to Run the Application
 
-Admin Features:
-- Admin login
-- Product management (Add / Update / Delete)
-- Order management
-- User management
+### 1️⃣ Database Setup (MySQL)
 
-Technical Features:
-- RESTful APIs
-- DTO-based architecture
-- Global exception handling
-- Input validations
-- Responsive UI using Bootstrap
+1. Make sure your MySQL Server is running.
+2. Open MySQL Command Line or MySQL Workbench and log in:
+   ```bash
+   mysql -u root -p
+   ```
+3. Create the database (Optional: backend will automatically create it if enabled in `application.properties`):
+   ```sql
+   CREATE DATABASE IF NOT EXISTS imart_db;
+   ```
+4. Configure database credentials in `spring_boot_backend/src/main/resources/application.properties`:
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/imart_db?createDatabaseIfNotExist=true
+   spring.datasource.username=root
+   spring.datasource.password=root
+   ```
 
---------------------------------------------------
+---
 
-TECH STACK
+### 2️⃣ Run the Spring Boot Backend
 
-Backend:
-- Spring Boot
-- Spring Data JPA (Hibernate)
-- Spring Security
-- RESTful APIs
-- MySQL
+Open **Terminal 1** (at project root `DAC_Project`):
 
-Frontend:
-- React.js
-- Bootstrap CSS
-- Axios
-- React Router
+```bash
+# Navigate to backend directory
+cd spring_boot_backend
 
-Database:
-- MySQL
+# Clean and run Spring Boot Application
+# On Windows (PowerShell / CMD):
+.\mvnw spring-boot:run
 
---------------------------------------------------
+# On Linux / macOS / Bash:
+./mvnw spring-boot:run
+```
 
-ARCHITECTURE
+*(Alternatively, if you have Maven installed globally)*:
+```bash
+mvn spring-boot:run
+```
 
-- Controller Layer: Handles API requests
-- Service Layer: Contains business logic
-- Repository Layer: Handles database operations using JPA
-- DTO Layer: Used for data transfer
-- Global Exception Handling: Centralized error handling
+* **Backend Server**: Starts at `http://localhost:8080`
+* **Swagger UI / API Docs**: `http://localhost:8080/swagger-ui.html`
 
---------------------------------------------------
+---
 
-PROJECT STRUCTURE
+### 3️⃣ Run the React Frontend
 
+Open **Terminal 2** (at project root `DAC_Project`):
+
+```bash
+# Navigate to frontend directory
+cd i-mart_frontend
+
+# Install dependencies (First time setup)
+npm install
+
+# Start Vite Development Server
+npm run dev
+```
+
+* **Frontend Server**: Starts at `http://localhost:5173` (or port displayed in terminal)
+
+---
+
+## ⚡ Summary of All Commands
+
+| Action | Commands |
+| :--- | :--- |
+| **Start MySQL Service (Windows)** | `net start MySQL80` *(or via Services app)* |
+| **Run Backend (PowerShell)** | `cd spring_boot_backend; .\mvnw spring-boot:run` |
+| **Run Backend (Bash / Linux)** | `cd spring_boot_backend && ./mvnw spring-boot:run` |
+| **Install Frontend Dependencies** | `cd i-mart_frontend; npm install` |
+| **Run Frontend Dev Server** | `cd i-mart_frontend; npm run dev` |
+| **Build Backend JAR** | `cd spring_boot_backend; .\mvnw clean package` |
+| **Build Frontend Production** | `cd i-mart_frontend; npm run build` |
+
+---
+
+## 🏗️ Project Architecture & Tech Stack
+
+### Tech Stack
+* **Backend**: Java 17, Spring Boot, Spring Security (JWT), Spring Data JPA (Hibernate), REST APIs, Swagger / OpenAPI
+* **Frontend**: React.js 19, Vite, React Router DOM, TailwindCSS / Custom Styling
+* **Database**: MySQL 8.0
+
+### Project Structure
+```text
 DAC_Project/
-|
-|-- spring_boot_backend/
-|   |-- controller
-|   |-- service
-|   |-- repository
-|   |-- dto
-|   |-- entity
-|   |-- exception
-|
-|-- src/ (React Frontend)
-|   |-- components
-|   |-- pages
-|   |-- services
-|   |-- App.js
-|
-|-- public/
-|-- package.json
-|-- README.txt
+│
+├── spring_boot_backend/          # Spring Boot Backend
+│   ├── src/main/java/com/        # Controllers, Services, Repositories, Entities, Security
+│   ├── src/main/resources/       # application.properties
+│   ├── pom.xml                   # Maven dependencies
+│   └── mvnw / mvnw.cmd           # Maven Wrapper executables
+│
+└── i-mart_frontend/              # React (Vite) Frontend
+    ├── src/                      # Components, Pages, Context, Services
+    ├── package.json              # NPM dependencies & scripts
+    └── vite.config.js            # Vite configuration
+```
 
---------------------------------------------------
+---
 
-BACKEND SETUP
+## 🛡️ Features & Security
 
-1. Navigate to backend directory:
-   cd spring_boot_backend
+- **User Authentication**: JWT-based login and registration (Role-based: `USER`, `ADMIN`).
+- **Product Catalog**: Browse products, search, and view product details.
+- **Cart & Orders**: Add items to cart, adjust quantities, place orders, view order history.
+- **Admin Panel**: Manage products, users, and orders.
 
-2. Configure MySQL in application.properties:
-   spring.datasource.url=jdbc:mysql://localhost:3306/imart_db
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
+---
 
-3. Run the backend:
-   mvn spring-boot:run
+## 👥 Contributors
 
-Backend runs on:
-http://localhost:8080
+- **Nikhil Patil** - [GitHub](https://github.com/NikhilPatil1010)
+- **Heeranand Kashyap** - [GitHub](https://github.com/goldenheera)
+- **Manoj Yadav** - [GitHub](https://github.com/lalit923)
+- **Dishant Samudre** - [GitHub](https://github.com/dishantsamudre9)
 
---------------------------------------------------
-
-FRONTEND SETUP
-
-1. Navigate to project root:
-   cd i-mart_project
-
-2. Install dependencies:
-   npm install
-
-3. Start frontend:
-   npm start
-
-Frontend runs on:
-http://localhost:3000
-
---------------------------------------------------
-
-SECURITY
-
-- Spring Security implementation
-- Role-based access (USER / ADMIN)
-- Secure authentication and authorization
-- Input validation for APIs
-
---------------------------------------------------
-
-FUTURE ENHANCEMENTS
-
-- Payment gateway integration
-- Wishlist functionality
-- Product reviews and ratings
-- Email notifications
-- Docker support
-- Cloud deployment (AWS / Azure)
-
---------------------------------------------------
-
-CONTRIBUTOR
-Heeranand kashyap
-GitHub: https://github.com/goldenheera
-
-Nikhil Patil
-GitHub: https://github.com/NikhilPatil1010
-
-Manoj Yadav
-GitHub : https://github.com/lalit923
-
-Dishant samudre
-GitHub : https://github.com/dishantsamudre9
